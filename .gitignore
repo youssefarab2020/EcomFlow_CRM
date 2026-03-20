@@ -1,0 +1,15 @@
+# ملفات البيئة
+.env
+
+# قاعدة البيانات المحلية
+db.sqlite3
+
+# ملفات البايت كود ديال Python
+__pycache__/
+*.py[cod]
+
+# مجلد virtual environment
+SETUP_VE/
+
+# مجلد static (اختياري إذا كنت غادي تستعمل WhiteNoise أو حلول مشابهة)
+static/
