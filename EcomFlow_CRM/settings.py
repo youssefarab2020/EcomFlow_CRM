@@ -15,10 +15,7 @@ import os ,sys
 from dotenv import load_dotenv
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
 
-# زيد هاد السطر باش Django يشوف المجلدات اللي داخل apps كأنها فـ Root
-sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 load_dotenv()
 
 SECRET_KEY = os.getenv('SECRET_KEY')

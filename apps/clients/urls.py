@@ -1,10 +1,12 @@
-# apps/clients/urls.py
+
 from django.urls import path
 from . import views
 
-app_name = 'clients' # هادي مهمة بزاف باش تعيط للروابط بسميتها
+app_name = 'clients' 
 
 urlpatterns = [
-    # path('', views.ClientListView.as_view(), name='list'), 
-    # خليها خاوية دابا حتى تصاوب الـ views
+    path('', views.client_list, name='list'),
+    path('add/', views.client_create, name='create'),
+    path('<int:pk>/update/', views.client_update, name='update'),
+    path('<int:pk>/delete/', views.client_delete, name='delete'),
 ]

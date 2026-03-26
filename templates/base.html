@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EcomFlow CRM{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><path fill=%22%230d6efd%22 d=%22M11.251.068a.5.5 0 0 1 .227.58L9.677 6.5H13a.5.5 0 0 1 .364.843l-8 8.5a.5.5 0 0 1-.842-.49L6.323 9.5H3a.5.5 0 0 1-.364-.843l8-8.5a.5.5 0 0 1 .615-.09z%22/></svg>">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: #212529;
+        }
+
+        /* Navbar عصرية */
+        .navbar {
+            background-color: #ffffff !important;
+            box-shadow: 0 1px 15px rgba(0,0,0,0.05);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: #495057 !important;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+
+        /* Footer بسيط */
+        footer {
+            margin-top: 50px;
+            padding: 30px 0;
+            border-top: 1px solid #eee;
+            color: #6c757d;
+            font-size: 0.85rem;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand fs-4" href="/">
+                <i class="bi bi-lightning-charge-fill me-1"></i>EcomFlow
+            </a>
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{% url 'clients:list' %}">
+                            <i class="bi bi-people me-1"></i> Clients
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="#">
+                            <i class="bi bi-graph-up-arrow me-1"></i> Ventes
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-outline-dark rounded-pill px-4" href="#">Connexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="text-center">
+        <div class="container">
+            <p>&copy; 2026 EcomFlow CRM. Fait avec <i class="bi bi-heart-fill text-danger"></i> pour votre business.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
