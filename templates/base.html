@@ -87,10 +87,11 @@
         </div>
     </nav>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+<main>
+  <div class="content-wrapper">
+    {% block main_content_base %}{% endblock %}
+</div>
+</main>
 
     <footer class="text-center">
         <div class="container">

@@ -1,105 +1,142 @@
-{% extends "base.html" %}
+{% extends "clients/base_clients.html" %}
 
-{% block title %}Gestion Clients | CRM 2026{% endblock %}
+{% block title %}Répertoire des Clients | CRM 2026{% endblock %}
 
-{% block content %}
-<div class="container py-5">
-    
-    <div class="row align-items-center mb-5">
-        <div class="col-md-6">
-            <h2 class="fw-bold text-dark m-0">📋 Répertoire des Clients</h2>
-            <p class="text-muted small">Visualisez et gérez vos contacts commerciaux</p>
+{% block client_header_title %}📋 Répertoire des Clients{% endblock %}
+{% block client_header_subtitle %}Visualisez et gérez vos contacts commerciaux{% endblock %}
+
+{% block client_header_action %}
+    <a href="{% url 'clients:create' %}" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm fw-bold">
+        <i class="bi bi-person-plus-fill me-2"></i>Ajouter un Client
+    </a>
+{% endblock %}
+
+{% block client_content_base %} 
+
+<div class="row mb-4 justify-content-end">
+    <div class="col-md-7 col-lg-5">
+        <form method="GET" action="{% url 'clients:list' %}" class="position-relative">
+            <div class="input-group shadow-sm rounded-pill overflow-hidden border">
+                <span class="input-group-text bg-white border-0 ps-3">
+                    <i class="bi bi-search text-muted"></i>
+                </span>
+                <input type="text" 
+                       name="q" 
+                       class="form-control border-0 py-2 shadow-none" 
+                       placeholder="Rechercher un nom, tel ou ville..." 
+                       value="{{ request.GET.q|default:'' }}">
+                
+                {% if request.GET.q %}
+                    <a href="{% url 'clients:list' %}" class="btn bg-white border-0 text-muted pe-3 transition-base">
+                        <i class="bi bi-x-circle"></i>
+                    </a>
+                {% endif %}
+                
+                <button type="submit" class="btn btn-dark px-4 transition-base">Filtrer</button>
+            </div>
+        </form>
+        
+        {% if request.GET.q %}
+        <div class="text-end mt-2">
+            <span class="badge bg-light text-dark border rounded-pill px-3 py-1 x-small fw-normal">
+                Résultat pour : "<strong>{{ request.GET.q }}</strong>"
+            </span>
         </div>
-        <div class="col-md-6 text-md-end">
-            <a href="{% url 'clients:create' %}" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm fw-bold">
-                <i class="bi bi-person-plus-fill me-2"></i>Ajouter un Client
-            </a>
-        </div>
+        {% endif %}
     </div>
-
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="bg-light border-bottom">
-                    <tr>
-                        <th class="ps-4 py-3 text-uppercase small fw-bold text-secondary">Nom & Prénom</th>
-                        <th class="py-3 text-uppercase small fw-bold text-secondary">Téléphone / WhatsApp</th>
-                        <th class="py-3 text-uppercase small fw-bold text-secondary">Email Professionnel</th>
-                        <th class="py-3 text-uppercase small fw-bold text-secondary">Localisation</th>
-                        <th class="pe-4 py-3 text-end text-uppercase small fw-bold text-secondary">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for client in clients %}
-                    <tr>
-                        <td class="ps-4 py-4">
-                            <span class="fw-bold text-dark fs-6">{{ client.name }}</span>
-                        </td>
-
-                        <td>
-                            <a href="https://wa.me/{{ client.phone|cut:' ' }}" target="_blank" class="text-decoration-none text-dark d-block">
-                                <i class="bi bi-whatsapp text-success me-2"></i>{{ client.phone }}
+</div>
+<div class="card border-0 shadow-sm rounded-4 overflow-hidden mt-2">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light border-bottom">
+                <tr>
+                    <th class="ps-4 py-3 text-uppercase small fw-bold text-secondary">Nom & Prénom</th>
+                    <th class="py-3 text-uppercase small fw-bold text-secondary">Téléphone / WhatsApp</th>
+                    <th class="py-3 text-uppercase small fw-bold text-secondary">Email</th>
+                    <th class="py-3 text-uppercase small fw-bold text-secondary">Localisation</th>
+                    <th class="pe-4 py-3 text-end text-uppercase small fw-bold text-secondary">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr>
+                    <td class="ps-4 py-4">
+                        <span class="fw-bold text-dark fs-6">{{ client.name }}</span>
+                    </td>
+                    <td>
+                        <a href="https://wa.me/{{ client.phone|default:'' }}" target="_blank" class="text-decoration-none text-dark d-block">
+                            <i class="bi bi-whatsapp text-success me-2"></i>{{ client.phone }}
+                        </a>
+                    </td>
+                    <td>
+                        {% if client.email %}
+                        <a href="mailto:{{ client.email }}" class="text-decoration-none text-dark d-block">
+                            <i class="bi bi-envelope-at text-danger me-2"></i>{{ client.email }}
+                        </a>
+                        {% else %}
+                        <span class="text-muted small italic">Non renseigné</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="text-secondary small">
+                            <i class="bi bi-geo-alt me-1"></i>{{ client.city|default:"-" }}
+                        </div>
+                    </td>
+                    <td class="pe-4 text-end">
+                        <div class="d-flex justify-content-end gap-2">
+                            <a href="{% url 'clients:update' client.pk %}" class="btn btn-sm btn-outline-primary border-0 rounded-circle p-2 transition-base" title="Modifier">
+                                <i class="bi bi-pencil-square"></i>
                             </a>
-                        </td>
-
-                        <td>
-                            {% if client.email %}
-                            <a href="mailto:{{ client.email }}" class="text-decoration-none text-dark d-block">
-                                <i class="bi bi-envelope-at text-danger me-2"></i>{{ client.email }}
-                            </a>
-                            {% else %}
-                            <span class="text-muted small italic">Non renseigné</span>
-                            {% endif %}
-                        </td>
-
-                        <td>
-                            <div class="text-secondary small">
-                                <i class="bi bi-geo-alt me-1"></i>{{ client.city|default:"-" }}
-                            </div>
-                        </td>
-
-                        <td class="pe-4 text-end">
-                            <div class="d-flex justify-content-end gap-2">
-                                <a href="{% url 'clients:update' client.pk %}" class="btn btn-sm btn-outline-primary border-0 rounded-circle p-2" title="Modifier">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a href="{% url 'clients:delete' client.pk %}" class="btn btn-sm btn-outline-danger border-0 rounded-circle p-2" title="Supprimer" onclick="return confirm('Supprimer ce client ?')">
+                            <form action="{% url 'clients:delete' client.pk %}" method="POST" class="d-inline" 
+                                  onsubmit="return confirm('Supprimer le client : {{ client.name|escapejs }} ?');">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger border-0 rounded-circle p-2 transition-base" title="Supprimer">
                                     <i class="bi bi-trash3"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5" class="text-center py-5">
-                            <div class="text-muted opacity-50 mb-3"><i class="bi bi-folder2-open fs-1"></i></div>
-                            <p class="text-muted m-0">Aucune donnée client disponible pour le moment.</p>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="mt-3 text-end">
-        <span class="badge bg-white text-dark border rounded-pill px-3 py-2 fw-normal">
-            Total: <strong>{{ clients.count }}</strong> client{{ clients.count|pluralize }}
-        </span>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-5">
+                        <div class="text-muted opacity-50 mb-3"><i class="bi bi-folder2-open fs-1"></i></div>
+                        <p class="text-muted m-0">Aucun client trouvé.</p>
+                        {% if request.GET.q %}
+                            <a href="{% url 'clients:list' %}" class="btn btn-sm btn-link mt-2 text-decoration-none">Effacer la recherche</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
+<div class="mt-3 text-end mb-5">
+    <span class="badge bg-white text-dark border rounded-pill px-3 py-2 fw-normal shadow-sm">
+        Total: <strong>{{ clients.count }}</strong> client{{ clients.count|pluralize }}
+    </span>
+</div>
+
 <style>
-    /* لمسات CRM احترافية */
-    body { background-color: #f4f6f9; }
-    .table thead th { letter-spacing: 0.5px; border: none; }
-    .table tbody tr { border-bottom: 1px solid #f1f1f1; transition: 0.2s; }
-    .table tbody tr:hover { background-color: #fbfcfe !important; }
+    /* تحسينات إضافية لشريط البحث */
+    .input-group:focus-within {
+        border-color: #0d6efd !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1) !important;
+    }
+    input::placeholder {
+        font-size: 0.9rem;
+        color: #adb5bd;
+    }
+    .transition-base {
+        transition: all 0.2s ease-in-out;
+    }
+    .x-small { font-size: 0.75rem; }
     
-    /* جعل الروابط النصية تتغير عند التمرير */
-    a.text-dark:hover { color: #0d6efd !important; text-decoration: underline !important; }
-    
-    .btn-primary { background: #0d6efd; border: none; border-radius: 10px; }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2); }
+    /* أنيميشن خفيف عند تحريك الماوس فوق الأزرار والروابط */
+    .btn:hover, a:hover {
+        transform: translateY(-1px);
+    }
 </style>
 {% endblock %}

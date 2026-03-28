@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block main_content_base %}
+<div class="container py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h2 class="fw-bold text-dark m-0">
+                {% block client_header_title %}📋 Répertoire des Clients{% endblock %}
+            </h2>
+            <p class="text-muted small m-0">
+                {% block client_header_subtitle %}Visualisez et gérez vos contacts commerciaux{% endblock %}
+            </p>
+        </div>
+        <div class="col-md-6 text-md-end mt-3 mt-md-0">
+          {% block client_header_action %}
+    <a href="{% url 'clients:list' %}" class="btn btn-outline-secondary rounded-pill px-4 py-2 shadow-sm fw-bold">
+        <i class="bi bi-arrow-left me-2"></i>Retour à la liste
+    </a>
+{% endblock %}
+        </div>
+    </div>
+
+    <div class="client-content">
+        {% block client_content_base %}{% endblock %}
+    </div>
+</div>
+
+<style>
+    /* Styles spécifiques pour l'interface Clients 2026 */
+    body { background-color: #f8f9fa; }
+    
+    .btn-primary { 
+        background-color: #0d6efd; 
+        border: none; 
+        transition: all 0.3s ease; 
+    }
+    
+    .btn-primary:hover { 
+        transform: translateY(-2px); 
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25); 
+    }
+
+    .rounded-4 { 
+        border-radius: 1.2rem !important; 
+    }
+
+    /* Animation fluide pour le chargement du contenu */
+    .client-content {
+        animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+{% endblock %}
