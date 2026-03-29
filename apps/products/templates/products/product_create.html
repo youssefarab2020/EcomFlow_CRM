@@ -1,0 +1,92 @@
+{% extends "products/base_products.html" %}
+
+{% block title %}Nouveau Produit | EcomFlow 2026{% endblock %}
+
+{% comment %} 
+   تغيير العناوين ليتناسب مع صفحة إضافة منتج 
+{% endcomment %}
+{% block product_header_title %}📦 Nouveau Produit{% endblock %}
+{% block product_header_subtitle %}Enregistrez un nouvel article dans votre inventaire{% endblock %}
+
+{% block product_content_base %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="card border-0 shadow-sm p-4" style="border-radius: 20px; background: #ffffff;">
+            <div class="card-body">
+                
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger p-2 small text-center mb-3 rounded-3">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <div class="row g-4">
+                        {% for field in form %}
+                        <div class="col-12">
+                            <label for="{{ field.id_for_label }}" class="form-label small fw-semibold text-secondary mb-1 ms-2">
+                                {{ field.label }}
+                            </label>
+                            
+                            <div class="input-group border rounded-pill px-3 py-1 bg-light shadow-none transition-base">
+                                {{ field }}
+                            </div>
+
+                            {% if field.errors %}
+                                <div class="text-danger x-small mt-1 px-3">
+                                    {{ field.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mt-5 d-grid gap-2">
+                        <button type="submit" class="btn btn-primary rounded-pill py-3 fw-bold shadow-sm">
+                            <i class="bi bi-plus-circle-fill me-2"></i>Enregistrer le Produit
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+        <p class="text-center text-muted mt-5 x-small">
+            EcomFlow CRM &bull; 2026
+        </p>
+    </div>
+</div>
+
+<style>
+    /* تحسين شكل حقول Django داخل التصميم الدائري */
+    input, select, textarea {
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0.6rem 0.2rem;
+        font-size: 1rem;
+        color: #212529;
+        width: 100%;
+    }
+    
+    .input-group:focus-within {
+        border-color: #0d6efd !important;
+        background: #fff !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1) !important;
+    }
+
+    .transition-base {
+        transition: all 0.2s ease-in-out;
+    }
+
+    .x-small { font-size: 0.75rem; }
+
+    /* تحسين العرض على الهواتف */
+    @media (max-width: 576px) {
+        .card { border-radius: 25px; }
+        .btn-primary { padding-top: 1rem; padding-bottom: 1rem; }
+    }
+</style>
+{% endblock %}

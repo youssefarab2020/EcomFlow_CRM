@@ -8,8 +8,10 @@ db.sqlite3
 __pycache__/
 *.py[cod]
 
-# مجلد virtual environment
+# مجلد virtual environmentdb.sqlite3
+__pycache__/
+venv/
+.env
 SETUP_VE/
 
-# مجلد static (اختياري إذا كنت غادي تستعمل WhiteNoise أو حلول مشابهة)
 static/
