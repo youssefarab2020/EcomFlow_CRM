@@ -1,22 +1,26 @@
+from django.core.validators import MinValueValidator # (1) Import du validateur
 from django.db import models
-
+from django.conf import settings
+from django.db import models
 class Product(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     name = models.CharField(max_length=255)                 # (1) Nom du produit
 
     sku = models.CharField(
         max_length=50,
-        unique=True,
+        
         null=True,
         blank=True
     )                                                       # (2) Code produit (optionnel)
 
-    price = models.DecimalField(max_digits=10, decimal_places=2)  # (3) Prix de vente
+    price = models.DecimalField(max_digits=10, decimal_places=2 , validators=[MinValueValidator(1)]) # (3) Prix de vente
 
     cost_price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        default=0.00
+        default=0.00,
+        validators=[MinValueValidator(0)]
     )                                                       # (4) Prix de coût (optionnel)
 
     stock = models.PositiveIntegerField(default=0)          # (5) Quantité disponible
@@ -30,7 +34,10 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['-created_at']                          # (9) Trier du plus récent
-
+        constraints = [
+            # يسمح بتكرار الـ SKU في النظام، لكن يمنعه لنفس المستخدم
+            models.UniqueConstraint(fields=['user', 'sku'], name='unique_product_sku_per_user')
+        ]
     # --- (10) FONCTIONS ESSENTIELLES ---
 
     def get_margin(self):

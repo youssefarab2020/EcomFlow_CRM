@@ -53,6 +53,7 @@
                     <th class="ps-4 py-3 text-uppercase small fw-bold text-secondary">Nom & Prénom</th>
                     <th class="py-3 text-uppercase small fw-bold text-secondary">Téléphone / WhatsApp</th>
                     <th class="py-3 text-uppercase small fw-bold text-secondary">Email</th>
+                    <th class="py-3 text-uppercase small fw-bold text-secondary text-center">Statut Marketing</th>
                     <th class="py-3 text-uppercase small fw-bold text-secondary">Localisation</th>
                     <th class="pe-4 py-3 text-end text-uppercase small fw-bold text-secondary">Actions</th>
                 </tr>
@@ -77,6 +78,13 @@
                         <span class="text-muted small italic">Non renseigné</span>
                         {% endif %}
                     </td>
+                    <td class="text-center">
+    {% with status=client.marketing_status %}
+    <span class="badge bg-{{ status.color }}-subtle text-{{ status.color }} rounded-pill px-3 py-2 fw-bold small">
+        <i class="bi bi-bullseye me-1"></i> {{ status.label }}
+    </span>
+    {% endwith %}
+</td>
                     <td>
                         <div class="text-secondary small">
                             <i class="bi bi-geo-alt me-1"></i>{{ client.city|default:"-" }}

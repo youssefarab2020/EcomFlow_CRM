@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class InteractionsConfig(AppConfig):
+class VentesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.interactions'
+    name = 'apps.ventes'

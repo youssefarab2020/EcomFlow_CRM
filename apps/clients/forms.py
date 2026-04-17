@@ -5,7 +5,7 @@ class ClientForm(forms.ModelForm):  # (3) Création d’un formulaire basé sur 
 
     class Meta:
         model = Client             # (4) Lier le formulaire au modèle Client
-
+        exclude = ['user']
         # (5) Champs inclus dans le formulaire
         fields = ['name', 'phone', 'email', 'city']
         

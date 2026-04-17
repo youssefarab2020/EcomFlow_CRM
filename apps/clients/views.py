@@ -1,70 +1,75 @@
-from django.shortcuts import render, redirect, get_object_or_404  # (1) Fonctions utiles pour les views
-from .forms import ClientForm                                      # (2) Import du formulaire
-from .models import Client                                         # (3) Import du modèle Client
-from django.db.models import Q                                     # (4) Pour faire des recherches avancées
-#===========================Partie 1: Imports + Search View
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import ClientForm
+from .models import Client
+from django.db.models import Q
+from django.contrib.auth.decorators import login_required  # (NOUVEAU) Pour protéger les vues
+
+#=========================== Partie 1: Liste des Clients + Recherche
+@login_required(login_url='accounts:login', redirect_field_name=None)  # Redirige vers login si non connecté
 def client_list(request):
-    # (5) Récupérer la valeur de recherche (input name="q")
     query = request.GET.get('q')
     
+    # On commence toujours par filtrer par l'utilisateur connecté
+    user_clients = Client.objects.filter(user=request.user)
+    
     if query:
-        # (6) Filtrer les clients par nom, téléphone ou ville
-        clients = Client.objects.filter(
+        # On filtre la recherche PARMI les clients de l'utilisateur uniquement
+        clients = user_clients.filter(
             Q(name__icontains=query) | 
             Q(phone__icontains=query) |
             Q(city__icontains=query)
         )
     else:
-        # (7) Afficher tous les clients si pas de recherche
-        clients = Client.objects.all()
+        clients = user_clients
 
-    # (8) Envoyer les données au template
     return render(request, 'clients/client_list.html', {'clients': clients})
 
-#=====================================Partie 2: Create View
+#===================================== Partie 2: Créer un Client
+@login_required(login_url='accounts:login', redirect_field_name=None)
 def client_create(request):
-
-    if request.method == 'POST':          # (1) Vérifier si le formulaire est envoyé
-        form = ClientForm(request.POST)   # (2) Remplir le formulaire avec les données
-
-        if form.is_valid():               # (3) Vérifier si les données sont valides
-            form.save()                   # (4) Enregistrer dans la base de données
-            return redirect('clients:list')  # (5) Redirection vers la liste
-
+    if request.method == 'POST':
+        form = ClientForm(request.POST)
+        if form.is_valid():
+            # (MODIFIÉ) On ne sauvegarde pas tout de suite en BDD
+            client = form.save(commit=False)
+            # On lie le client à l'utilisateur actuel
+            client.user = request.user
+            # On sauvegarde réellement
+            client.save()
+            return redirect('clients:list')
     else:
-        form = ClientForm()               # (6) Formulaire vide (GET)
+        form = ClientForm()
 
-    return render(request, 'clients/create_client.html', {'form': form})  # (7) Affichage
+    return render(request, 'clients/create_client.html', {'form': form})
 
-#====================================Partie 3: Update View===============================================
-
+#==================================== Partie 3: Modifier un Client
+@login_required(login_url='accounts:login', redirect_field_name=None)
 def client_update(request, pk):
-
-    client = get_object_or_404(Client, pk=pk)  # (1) Récupérer le client ou erreur 404
+    # (MODIFIÉ) get_object_or_404 vérifie maintenant le PK ET si le client appartient à l'utilisateur
+    # Si un utilisateur tente de modifier le client d'un autre via l'URL, il aura une erreur 404.
+    client = get_object_or_404(Client, pk=pk, user=request.user)
 
     if request.method == 'POST':
-        # (2) Charger les données + instance pour modification
         form = ClientForm(request.POST, instance=client)
-
         if form.is_valid():
-            form.save()                       # (3) Sauvegarder les modifications
-            return redirect('clients:list')   # (4) Redirection
-
+            form.save()
+            return redirect('clients:list')
     else:
-        form = ClientForm(instance=client)    # (5) Remplir avec anciennes données
+        form = ClientForm(instance=client)
 
     return render(request, 'clients/update_client.html', {
         'form': form,
         'client': client
-    })  # (6) Envoyer au template
+    })
 
-#====================Partie 4: Delete View
+#==================== Partie 4: Supprimer un Client
+@login_required(login_url='accounts:login', redirect_field_name=None)
 def client_delete(request, pk):
+    # Sécurité : on vérifie que le client appartient bien à l'utilisateur
+    client = get_object_or_404(Client, pk=pk, user=request.user)
 
-    client = get_object_or_404(Client, pk=pk)  # (1) Récupérer le client
+    if request.method == 'POST':
+        client.delete()
+        return redirect('clients:list')
 
-    if request.method == 'POST':               # (2) Vérifier POST 
-        client.delete()                        # (3) Supprimer
-        return redirect('clients:list')        # (4) Retour à la liste
-
-    return redirect('clients:list')            # (5) Empêcher la suppression via une requête GET
+    return redirect('clients:list')

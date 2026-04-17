@@ -5,7 +5,7 @@ class ProductForm(forms.ModelForm):  # (3) Création d’un formulaire basé sur
 
     class Meta:
         model = Product            # (4) Lier le formulaire au modèle Product
-
+        exclude = ['user']
         # (5) Champs inclus dans le formulaire (Mise à jour pour les produits)
         fields = ['name', 'sku', 'price', 'cost_price', 'stock', 'description']
         
