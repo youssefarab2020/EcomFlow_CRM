@@ -2,11 +2,9 @@
 
 {% block title %}Modifier Produit | {{ product.name }}{% endblock %}
 
-{% comment %} ملء العناوين في الهيدر العلوي الخاص بالـ Base للمنتجات {% endcomment %}
 {% block product_header_title %}✏️ Modifier le Produit{% endblock %}
 {% block product_header_subtitle %}Modification des détails de : <strong>{{ product.name }}</strong>{% endblock %}
 
-{% comment %} استخدام اسم منطقة المحتوى الخاصة بالمنتجات {% endcomment %}
 {% block product_content_base %}
 <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
@@ -59,7 +57,6 @@
 </div>
 
 <style>
-    /* تنسيق الحقول لتناسب التصميم الدائري للمنتجات */
     input, select, textarea {
         border: none !important;
         background: transparent !important;

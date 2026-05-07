@@ -9,8 +9,9 @@ urlpatterns = [
     # ربط التطبيقات (Apps)
     path('clients/', include('apps.clients.urls')),
     path('products/', include('apps.products.urls')),
-    path('automations/', include('apps.automations.urls')),
+   
     path('ventes/', include('apps.ventes.urls')),
+    path('dashboard/', include('apps.dashboard.urls')),
     path('',include('apps.accounts.urls')),
     
 

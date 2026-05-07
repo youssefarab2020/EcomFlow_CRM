@@ -26,7 +26,7 @@
             flex-direction: column;
         }
 
-        /* Navbar عصرية */
+       
         .navbar {
             background-color: #ffffff !important;
             box-shadow: 0 1px 15px rgba(0,0,0,0.05);
@@ -49,7 +49,7 @@
             color: var(--primary-color) !important;
         }
 
-        /* تنسيق القائمة المنسدلة */
+      
         .dropdown-menu {
             border: none;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -76,7 +76,7 @@
             padding: 2rem 0;
         }
 
-        /* Footer بسيط */
+        
         footer {
             margin-top: auto;
             padding: 30px 0;
@@ -92,7 +92,7 @@
 
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand fs-4" href="/">
+            <a class="navbar-brand fs-4" href="{% url 'dashboard:home' %}">
                 <i class="bi bi-lightning-charge-fill me-1"></i>EcomFlow
             </a>
             
@@ -102,6 +102,11 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
+                     <li class="nav-item">
+                        <a class="nav-link px-3" href="{% url 'dashboard:home' %}">
+                           <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link px-3" href="{% url 'clients:list' %}">
                             <i class="bi bi-people me-1"></i> Clients
@@ -112,6 +117,7 @@
                             <i class="bi bi-box-seam me-1"></i> Produits
                         </a>
                     </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link px-3" href="{% url 'ventes:list' %}">
                             <i class="bi bi-graph-up-arrow me-1"></i> Ventes
@@ -120,9 +126,16 @@
 
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown ms-lg-3">
-                            <a class="nav-link dropdown-toggle btn btn-light rounded-pill px-4 border shadow-sm" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle me-1 text-primary"></i> {{ user.username }}
-                            </a>
+                           <a class="nav-link dropdown-toggle btn btn-light rounded-pill px-4 border shadow-sm d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    
+    {% if user.logo %}
+        <img src="{{ user.logo.url }}" alt="Logo" class="rounded-circle me-2" style="width: 25px; height: 25px; object-fit: cover;">
+    {% else %}
+        <i class="bi bi-person-circle me-2 text-primary"></i>
+    {% endif %}
+
+    <span>{{ user.username }}</span>
+</a>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2" aria-labelledby="navbarDropdown">
                                 <li>
                                     <a class="dropdown-item py-2" href="{% url 'accounts:profile_edit' %}">
@@ -192,7 +205,7 @@
                             alert.remove();
                         }, 500);
                     }
-                }, 4000); // 4000 = 4 ثوانٍ
+                }, 5000); 
             });
         });
     </script>

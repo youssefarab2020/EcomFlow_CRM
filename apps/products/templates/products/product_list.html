@@ -2,7 +2,7 @@
 
 {% block title %}Catalogue des Produits | CRM 2026{% endblock %}
 
-{% block product_header_title %}📦 Catalogue des Produits{% endblock %}
+{% block product_header_title %}<i class="bi bi-box-seam me-1"></i> Catalogue des Produits{% endblock %}
 {% block product_header_subtitle %}Gérez votre inventaire et vos tarifs en temps réel{% endblock %}
 
 {% block product_header_action %}
@@ -63,7 +63,7 @@
                 <tr>
                     <td class="ps-4 py-4">
                         <span class="fw-bold text-dark fs-6 d-block">{{ product.name }}</span>
-                        <span class="text-muted x-small">REF: {{ product.sku|default:"N/A" }}</span>
+                        <span class="text-muted x-small">SKU: {{ product.sku|default:"N/A" }}</span>
                     </td>
                     <td>
                         <span class="fw-bold text-primary">{{ product.price }} $</span>
@@ -144,7 +144,7 @@
         transform: translateY(-1px);
     }
     
-    /* لون خلفية لطيف للحقول المالية */
+  
     .bg-light-finance {
         background-color: #f8f9ff;
     }

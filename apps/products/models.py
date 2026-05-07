@@ -35,7 +35,7 @@ class Product(models.Model):
     class Meta:
         ordering = ['-created_at']                          # (9) Trier du plus récent
         constraints = [
-            # يسمح بتكرار الـ SKU في النظام، لكن يمنعه لنفس المستخدم
+            
             models.UniqueConstraint(fields=['user', 'sku'], name='unique_product_sku_per_user')
         ]
     # --- (10) FONCTIONS ESSENTIELLES ---

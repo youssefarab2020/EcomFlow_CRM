@@ -29,13 +29,12 @@ class CustomUserChangeForm(UserChangeForm):
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
 from django import forms
-from .models import User # استيراد موديل اليوزر الخاص بك
+from .models import User 
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        # لاحظ أنني أزلت first_name و last_name لأنك لم تضفها في الموديل الخاص بك صراحة، 
-        # (رغم أنها موجودة في AbstractUser لكن لنتجنب أي خطأ، سنكتفي بما هو موجود لديك)
+        
         fields = ['username', 'email', 'company_name', 'phone_number', 'address', 'logo']
         
     def __init__(self, *args, **kwargs):

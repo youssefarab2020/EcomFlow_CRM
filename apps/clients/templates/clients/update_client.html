@@ -2,11 +2,11 @@
 
 {% block title %}Modifier Client | {{ client.name }}{% endblock %}
 
-{% comment %} ملء العناوين في الهيدر العلوي الخاص بالـ Base {% endcomment %}
+
 {% block client_header_title %}✏️ Modifier le Client{% endblock %}
 {% block client_header_subtitle %}Modification des informations de : <strong>{{ client.name }}</strong>{% endblock %}
 
-{% comment %} استخدام الاسم الصحيح للمنطقة الرئيسية {% endcomment %}
+
 {% block client_content_base %}
 <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
@@ -59,7 +59,6 @@
 </div>
 
 <style>
-    /* تنسيق الحقول لتناسب التصميم الدائري */
     input, select, textarea {
         border: none !important;
         background: transparent !important;

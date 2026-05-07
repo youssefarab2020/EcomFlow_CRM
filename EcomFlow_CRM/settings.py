@@ -42,10 +42,12 @@ INSTALLED_APPS = [
 
     # تطبيقات مشروعك
     'apps.clients',
-    'apps.products',
-    'apps.automations',
+    
+   
     'apps.ventes',
     'apps.accounts',
+    'apps.dashboard',
+    'apps.products',
 ]
 
 MIDDLEWARE = [
@@ -78,17 +80,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'EcomFlow_CRM.wsgi.application'
 
-
 # ==============================================================================
 # قاعدة البيانات (Database)
 # ==============================================================================
-# (تم التعديل) سيعمل بـ SQLite على جهازك، وسيعمل بـ PostgreSQL على الإنترنت تلقائياً
+# العمل بـ SQLite محلياً فقط على الجهاز
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600 ,
-        conn_health_checks=True,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
@@ -123,13 +123,20 @@ USE_TZ = True
 # ==============================================================================
 # الملفات الثابتة (Static Files)
 # ==============================================================================
+# 1. الرابط الذي يظهر في المتصفح
 STATIC_URL = 'static/'
-# المسار الذي سيجمع فيه ديجانغو كل ملفات التصميم استعداداً للرفع
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-# إخبار WhiteNoise بضغط الملفات لتسريع الموقع
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# 2. المجلد الذي تضع فيه ملفاتك يدوياً أثناء البرمجة (تأكد أن اسمه static في مشروعك)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# 3. المجلد الذي سيجمع فيه ديجانغو الملفات عند تشغيل أمر collectstatic
+# يجب أن يكون اسمه مختلفاً، مثلاً 'staticfiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# 4. إعدادات WhiteNoise (يفضل استخدام النسخة الأحدث التي لا تسبب مشاكل في التطوير)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # ==============================================================================

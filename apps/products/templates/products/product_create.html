@@ -2,9 +2,7 @@
 
 {% block title %}Nouveau Produit | EcomFlow 2026{% endblock %}
 
-{% comment %} 
-   تغيير العناوين ليتناسب مع صفحة إضافة منتج 
-{% endcomment %}
+
 {% block product_header_title %}📦 Nouveau Produit{% endblock %}
 {% block product_header_subtitle %}Enregistrez un nouvel article dans votre inventaire{% endblock %}
 
@@ -60,7 +58,6 @@
 </div>
 
 <style>
-    /* تحسين شكل حقول Django داخل التصميم الدائري */
     input, select, textarea {
         border: none !important;
         background: transparent !important;
@@ -83,7 +80,7 @@
 
     .x-small { font-size: 0.75rem; }
 
-    /* تحسين العرض على الهواتف */
+  
     @media (max-width: 576px) {
         .card { border-radius: 25px; }
         .btn-primary { padding-top: 1rem; padding-bottom: 1rem; }

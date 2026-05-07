@@ -86,3 +86,4 @@ class Vente(models.Model):
     class Meta:
         # (12) Trier du plus récent au plus ancien
         ordering = ['-created_at']
+       

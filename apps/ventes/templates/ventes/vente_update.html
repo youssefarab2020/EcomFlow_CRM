@@ -2,7 +2,7 @@
 
 {% block title %}Modifier Vente #{{ vente.id }} | EcomFlow 2026{% endblock %}
 
-{% comment %} تخصيص العناوين لتناسب عملية التعديل {% endcomment %}
+
 {% block vente_header_title %}✏️ Modifier la Vente{% endblock %}
 {% block vente_header_subtitle %}Mise à jour de la transaction pour : <strong>{{ vente.client.name }}</strong>{% endblock %}
 
@@ -63,7 +63,7 @@
 </div>
 
 <style>
-    /* التنسيقات الخاصة بـ Django Forms لتناسب المظهر الدائري */
+    
     input, select, textarea {
         border: none !important;
         background: transparent !important;
@@ -74,7 +74,7 @@
         width: 100%;
     }
     
-    /* تحسين القوائم المنسدلة */
+ 
     select.form-select {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
         background-position: right 0.75rem center !important;

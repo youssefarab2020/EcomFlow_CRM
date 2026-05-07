@@ -22,7 +22,7 @@
         }
         .btn-auth:hover { transform: translateY(-2px); background-color: #0b5ed7; color: white; }
         
-        /* تنسيق إضافي لرسائل الخطأ لتشبه باقي الموقع */
+        
         .alert-error-custom {
             border-left: 4px solid #dc3545;
             background-color: #fff5f5;
@@ -71,7 +71,7 @@
                     <label class="form-label small fw-bold">Nom d'utilisateur</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent text-muted"><i class="bi bi-person"></i></span>
-                        <input type="text" name="username" class="form-control border-start-0 ps-0" placeholder="username" required>
+                        <input type="text" name="username" autocomplete="nickname" class="form-control border-start-0 ps-0" placeholder="username" required>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@
                     <label class="form-label small fw-bold">Adresse e-mail</label>
                     <div class="input-group">
                         <span class="input-group-text bg-transparent text-muted"><i class="bi bi-envelope"></i></span>
-                        <input type="email" name="email" class="form-control border-start-0 ps-0" placeholder="nom@exemple.com" required>
+                        <input type="email" name="email" autocomplete="username" class="form-control border-start-0 ps-0" placeholder="nom@exemple.com" required>
                     </div>
                 </div>
 
@@ -113,7 +113,7 @@
     </div>
 
     <script>
-        // هذا الجزء يجعل المتصفح يمنع الإرسال ويعطي تنبيه إذا كانت الخانات فارغة تلقائياً
+        
         (function () {
             'use strict'
             var forms = document.querySelectorAll('form')

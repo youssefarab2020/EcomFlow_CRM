@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block main_content_base %}
+<div class="container-fluid py-5 px-lg-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-7">
+            <div class="d-flex align-items-center">
+                <div class="bg-primary text-white rounded-4 p-3 me-3 shadow-sm d-none d-md-block">
+                    <i class="bi bi-speedometer2 me-1"></i>
+                </div>
+                <div>
+                    <h2 class="fw-bold text-dark m-0 letter-spacing-tight">
+                        {% block dashboard_header_title %}Tableau de bord stratégique{% endblock %}
+                    </h2>
+                    <p class="text-muted m-0 fs-6">
+                        {% block dashboard_header_subtitle %}Analyse des données et des performances opérationnelles en temps réel{% endblock %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 text-md-end mt-3 mt-md-0">
+            <div class="dashboard-actions">
+                {% block dashboard_header_action %}
+                    {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-render-area">
+        {% block dashboard_content %}{% endblock %}
+    </div>
+</div>
+
+<style>
+    /* 🎨 Philosophie du design : propreté, clarté et élégance */
+    body { background-color: #f4f7fa; font-family: 'Inter', 'Segoe UI', Roboto, sans-serif; }
+    
+    /* Coins très arrondis comme dans les applications SaaS modernes */
+    .rounded-4 { border-radius: 1rem !important; }
+    
+    .letter-spacing-tight { letter-spacing: -0.5px; }
+
+    /* Ombres douces et professionnelles */
+    .card {
+        border: none;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
+
+    /* Animation d’apparition fluide */
+    .dashboard-render-area {
+        animation: slideUpFade 0.5s ease-out;
+    }
+
+    @keyframes slideUpFade {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Style spécial pour mettre en valeur les chiffres */
+    .stat-number {
+        font-family: 'Monaco', 'Courier New', monospace;
+        font-weight: 700;
+        color: #0d6efd;
+    }
+</style>
+{% endblock %}
